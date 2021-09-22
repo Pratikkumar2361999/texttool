@@ -3,36 +3,37 @@ import React, { useState } from "react";
 export default function TextForm(props) {
   const handleUpclick = () => {
     setText(text.toUpperCase());
-    props.showAlert("Converted to Uppercase","success")
+    props.showAlert("Converted to Uppercase", "success");
   };
   const handleOnChange = (event) => {
     setText(event.target.value);
   };
   const handleLoclick = () => {
     setText(text.toLowerCase());
-    props.showAlert("Converted to Lowercase","success")
+    props.showAlert("Converted to Lowercase", "success");
   };
   const ClearText = () => {
     setText("");
-    props.showAlert("Text Cleared ","success")
+    props.showAlert("Text Cleared ", "success");
   };
   const handleCopy = () => {
     let text = document.getElementById("exampleFormControlTextarea1");
     text.select();
     navigator.clipboard.writeText(text.value);
-    props.showAlert("Text Copied  ","success")
-
+    props.showAlert("Text Copied  ", "success");
   };
   const handleExtraSpace = () => {
     let newText = text.split(/[ ]+/);
-    setText(newText.join(" "))
-    props.showAlert("Extra Spaces are Removed","success")
-
+    setText(newText.join(" "));
+    props.showAlert("Extra Spaces are Removed", "success");
   };
   const [text, setText] = useState("");
   return (
     <>
-      <div className="container mt-5" style={{color:props.mode==="dark"?"white":"#343a40"}}>
+      <div
+        className="container mt-5"
+        style={{ color: props.mode === "dark" ? "white" : "#343a40" }}
+      >
         <h1>{props.heading}</h1>
         <div className="mb-3">
           <textarea
@@ -41,9 +42,13 @@ export default function TextForm(props) {
             rows="8"
             value={text}
             onChange={handleOnChange}
-            style = {{backgroundColor:props.mode==="light"?"white":"#343a40" ,color:props.mode==="dark"?"white":"#343a40"}}
+            style={{
+              backgroundColor: props.mode === "light" ? "white" : "#343a40",
+              color: props.mode === "dark" ? "white" : "#343a40",
+            }}
           ></textarea>
         </div>
+        <div className="d-flex align-items-center">
         <button className="btn btn-primary" onClick={handleUpclick}>
           Convert to Uppercase
         </button>
@@ -59,15 +64,24 @@ export default function TextForm(props) {
         <button className="btn btn-primary" onClick={handleExtraSpace}>
           Remove Extraspaces
         </button>
+        </div>
       </div>
-      <div className="container my-3" style={{color:props.mode==="dark"?"white":"#343a40"}}>
+      <div
+        className="container my-3"
+        style={{ color: props.mode === "dark" ? "white" : "#343a40" }}
+      >
         <h2>Your Text Summary</h2>
         <p>
-          {text.split(" ").length} words and {text.length}
+          You Typed {text.length - text.split(" ").length + 1} Character And{" "}
+          {text === "" ? "0" : text.split(" ").length - 1} Words
         </p>
         <p>{0.008 * text.split(" ").length} minutes are taken in read</p>
         <h2>Preview</h2>
-        <p>{text.length>0?text:"Enter something into the textbox to preview it here"}</p>
+        <p>
+          {text.length > 0
+            ? text
+            : "Enter something into the textbox to preview it here"}
+        </p>
       </div>
     </>
   );
