@@ -17,9 +17,7 @@ export default function TextForm(props) {
     props.showAlert("Text Cleared ", "success");
   };
   const handleCopy = () => {
-    let text = document.getElementById("exampleFormControlTextarea1");
-    text.select();
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(text);
     props.showAlert("Text Copied  ", "success");
   };
   const handleExtraSpace = () => {
@@ -48,22 +46,40 @@ export default function TextForm(props) {
             }}
           ></textarea>
         </div>
-        <div className="d-flex align-items-center">
-        <button className="btn btn-primary" onClick={handleUpclick}>
-          Convert to Uppercase
-        </button>
-        <button className="btn btn-primary mx-2 my-2" onClick={handleLoclick}>
-          Convert to Lowercase
-        </button>
-        <button className="btn btn-primary" onClick={ClearText}>
-          Clear Text
-        </button>
-        <button className="btn btn-primary mx-2" onClick={handleCopy}>
-          Copy Text
-        </button>
-        <button className="btn btn-primary" onClick={handleExtraSpace}>
-          Remove Extraspaces
-        </button>
+        <div>
+          <button
+            disabled={text.length===0}
+            className="btn btn-primary rounded-pill"
+            onClick={handleUpclick}
+            style={{ marginRight: "5px", marginBottom:"3px"}}
+          >
+            Convert to Uppercase
+          </button>
+          <button
+          disabled={text.length===0}
+            className="btn btn-primary rounded-pill"
+            onClick={handleLoclick}
+            style={{ marginRight: "5px",marginBottom:"3px" }}
+          >
+            Convert to Lowercase
+          </button>
+          <button 
+          disabled={text.length===0}
+          className="btn btn-primary rounded-pill" onClick={ClearText} style ={{marginRight:"5px",marginBottom:"2px"}}>
+            Clear Text
+          </button>
+          <button 
+          disabled={text.length===0}
+          className="btn btn-primary rounded-pill" onClick={handleCopy} style ={{marginRight:"5px",marginBottom:"2px"}}>
+            Copy Text
+          </button>
+          <button
+          disabled={text.length===0}
+            className="btn btn-primary rounded-pill"
+            onClick={handleExtraSpace}
+          >
+            Remove Extraspaces
+          </button>
         </div>
       </div>
       <div
@@ -72,10 +88,10 @@ export default function TextForm(props) {
       >
         <h2>Your Text Summary</h2>
         <p>
-          You Typed {text.length - text.split(" ").length + 1} Character And{" "}
-          {text === "" ? "0" : text.split(" ").length - 1} Words
+          You Typed {text === /\s+/ ? "0" : text.length - text.split(/\s+/).length + 1} Character And{" "}
+          {text === "" ? "0" : text.split(/\s+/).filter((element)=>{return element.length!==0}).length} Words
         </p>
-        <p>{0.008 * text.split(" ").length} minutes are taken in read</p>
+        <p>{text ===""  ? "0" : 0.008*60 * text.split(" ").filter((element)=>{return element.length!==0}).length} seconds are taken in read</p>
         <h2>Preview</h2>
         <p>
           {text.length > 0
