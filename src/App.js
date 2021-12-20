@@ -42,7 +42,7 @@ function App() {
   return (
     <>
     {/* <Router> */}
-      <Navbar title="Textyfire" mode = {mode} toggleMode = {toggleMode} />
+      <Navbar title="TextyFire" mode = {mode} toggleMode = {toggleMode} />
       <Alert alert={alert}/>
       <div className="container">
       {/* <Switch> */}
