@@ -1,27 +1,38 @@
 import React, { useState } from "react";
 
+let startTime,endTime ;
 export default function TextForm(props) {
   const handleUpclick = () => {
+    startTime = performance.now();
     setText(text.toUpperCase());
+    endTime = performance.now();
     props.showAlert("Converted to Uppercase", "success");
   };
   const handleOnChange = (event) => {
     setText(event.target.value);
   };
   const handleLoclick = () => {
+    startTime = performance.now();
     setText(text.toLowerCase());
+    endTime = performance.now();
     props.showAlert("Converted to Lowercase", "success");
   };
   const ClearText = () => {
+    startTime = performance.now();
     setText("");
+    endTime = performance.now();
     props.showAlert("Text Cleared ", "success");
   };
   const handleCopy = () => {
+    startTime = performance.now();
     navigator.clipboard.writeText(text);
+    endTime = performance.now();
     props.showAlert("Text Copied  ", "success");
   };
   const handleExtraSpace = () => {
+    startTime = performance.now();
     let newText = text.split(/[ ]+/);
+    endTime = performance.now();
     setText(newText.join(" "));
     props.showAlert("Extra Spaces are Removed", "success");
   };
@@ -89,16 +100,17 @@ export default function TextForm(props) {
         <h2>Your Text Summary</h2>
         <p>
           You Typed {text === /\s+/ ? "0" : text.length - text.split(/\s+/).length + 1} Character And{" "}
-          {text === "" ? "0" : text.split(/\s+/).filter((element)=>{return element.length!==0}).length} Words
+          {text === "" ? "0" : text.split(/\s+/).filter((element)=>{return element.length!==0}).length} Words.
         </p>
-        <p>{text ===""  ? "0" : 0.008*60 * text.split(" ").filter((element)=>{return element.length!==0}).length} seconds are taken in read</p>
+        <p>{endTime === undefined ? 0 :  endTime - startTime} seconds are taken to complete the operation.</p>
         <h2>Preview</h2>
         <p>
           {text.length > 0
             ? text
-            : "Enter something into the textbox to preview it here"}
+            : "Enter something into the textbox to preview it here:-"}
         </p>
       </div>
     </>
   );
+  
 }
